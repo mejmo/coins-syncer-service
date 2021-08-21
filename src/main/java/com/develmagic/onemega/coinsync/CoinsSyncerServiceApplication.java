@@ -28,11 +28,6 @@ public class CoinsSyncerServiceApplication {
     @Autowired
     CoinmarketCapClient capClient;
 
-    @PostConstruct
-    public void kokot() {
-        capClient.getCoinInfoBySlug("bitcoin");
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(CoinsSyncerServiceApplication.class, args);
     }

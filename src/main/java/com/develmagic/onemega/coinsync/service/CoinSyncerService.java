@@ -1,6 +1,8 @@
 package com.develmagic.onemega.coinsync.service;
 
 import com.develmagic.onemega.coinsync.client.CoinmarketCapClient;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,7 +19,10 @@ public class CoinSyncerService implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         log.info("Starting initial synchronization");
-        coinmarketCapService.getBySymbol("BTC");
+
+        exchangeService.getKrakenCoins().stream()
+                .map(krakenCoin -> Map.entry(krakenCoin, coinmarketCapService.getBySymbol(krakenCoin.getSymbol())))
+                .collect(Collectors.toList());
 
 //        exchangeService.getKrakenCoins()
 //                .stream()
